@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORLD SHOP</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07130e;color:white;font-family:Arial,sans-serif}
+header{padding:22px;background:#063d29;text-align:center}
+header h1{margin:0;color:#42ed91}
+header p{margin:8px 0 0}
+.search{padding:15px}
+input{width:100%;padding:14px;border-radius:12px;border:0;font-size:16px}
+h2{padding:0 15px}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.card{background:#123b2b;border-radius:15px;padding:14px}
+.card .emoji{font-size:48px;text-align:center;padding:12px}
+.card h3{font-size:16px}
+.price{color:#48f39a;font-weight:bold;font-size:18px}
+button{background:#13a866;color:white;border:0;padding:12px;border-radius:10px;width:100%;font-weight:bold}
+.cart{margin:15px;padding:18px;background:#123b2b;border-radius:15px}
+footer{text-align:center;padding:25px;color:#aaa}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🌍 WORLD SHOP</h1>
+<p>Мағозаи интернетии шумо 💚</p>
+<p>Ҳама нархҳо бо сомонӣ (TJS)</p>
+</header>
+
+<div class="search">
+<input id="search" placeholder="🔍 Ҷустуҷӯи маҳсулот..." oninput="findProducts()">
+</div>
+
+<h2>🛍 Маҳсулоти мо</h2>
+<div class="products" id="products"></div>
+
+<div class="cart">
+<h2>🛒 Сабади харид</h2>
+<div id="cart">Сабад холӣ аст</div>
+<h3 id="total">Ҳамагӣ: 0 сомонӣ</h3>
+<button onclick="order()">Фармоиш додан</button>
+</div>
+
+<footer>
+WORLD SHOP © 2026<br>
+Хуш омадед ба мағозаи мо 💚
+</footer>
+
+<script>
+const items=[
+{name:"Телефон",price:1200,emoji:"📱"},
+{name:"Ноутбук",price:3500,emoji:"💻"},
+{name:"Гӯшмонак",price:150,emoji:"🎧"},
+{name:"Соати ҳушманд",price:250,emoji:"⌚"},
+{name:"Клавиатура",price:180,emoji:"⌨️"},
+{name:"Баландгӯяк",price:220,emoji:"🔊"}
+];
+
+let basket=[];
+
+function showProducts(list=items){
+document.getElementById("products").innerHTML=list.map((p,i)=>`
+<div class="card">
+<div class="emoji">${p.emoji}</div>
+<h3>${p.name}</h3>
+<div class="price">${p.price} сомонӣ</div>
+<br>
+<button onclick="add(${items.indexOf(p)})">Ба сабад</button>
+</div>`).join("");
+}
+
+function findProducts(){
+let q=document.getElementById("search").value.toLowerCase();
+showProducts(items.filter(p=>p.name.toLowerCase().includes(q)));
+}
+
+function add(i){
+basket.push(items[i]);
+updateCart();
+}
+
+function updateCart(){
+let total=basket.reduce((s,p)=>s+p.price,0);
+document.getElementById("cart").innerHTML=
+basket.length?basket.map(p=>p.emoji+" "+p.name+" — "+p.price+" сомонӣ").join("<br>"):"Сабад холӣ аст";
+document.getElementById("total").innerText="Ҳамагӣ: "+total+" сомонӣ";
+}
+
+function order(){
+if(!basket.length){
+alert("Аввал маҳсулот интихоб кунед!");
+return;
+}
+alert("Фармоиши шумо омода шуд! Барои хариди воқеӣ бо маъмури WORLD SHOP тамос гиред.");
+}
+
+showProducts();
+</script>
+</body>
+</html>
